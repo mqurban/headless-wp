@@ -5,17 +5,9 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const credentials = btoa('admin:wyHe rfYd 6nNn ASX1 jnmf T5An');
-    
     fetch("https://patpongmarket.com/wp-json/wp/v2/posts", {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
       headers: {
-        'Authorization': `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Origin': 'https://headless-wp-pearl.vercel.app'
+        'Content-Type': 'application/json'
       }
     })
       .then((response) => {
