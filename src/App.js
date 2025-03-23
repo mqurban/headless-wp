@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     const credentials = btoa('admin:wyHe rfYd 6nNn ASX1 jnmf T5An');
     
-    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts?_embed", {
+    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts", {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
