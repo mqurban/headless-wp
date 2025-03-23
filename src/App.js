@@ -5,7 +5,10 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://qurban.ct.ws/wp-json/wp/v2/posts")
+    fetch("http://qurban.ct.ws/wp-json/wp/v2/posts", {
+      // Explicitly allow mixed content for non-HTTPS requests
+      mode: 'no-cors'
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
