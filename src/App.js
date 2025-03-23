@@ -5,7 +5,14 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts")
+    const credentials = btoa('admin:wyHe rfYd 6nNn ASX1 jnmf T5An');
+    
+    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts", {
+      headers: {
+        'Authorization': `Basic ${credentials}`,
+        'Content-Type': 'application/json'
+      }
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
