@@ -1,0 +1,33 @@
+/* Navbar styles */
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* Post content styles */
+.post-content {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
+/* Custom link styles */
+.nav-link {
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #e9ecef !important;
+}
+
+/* Container padding */
+.main-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

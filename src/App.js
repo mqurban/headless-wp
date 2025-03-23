@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.css'; 
 import Home from "./pages/Home";
 import SinglePost from "./pages/SinglePost";
 import Navbar from "./components/Navbar";

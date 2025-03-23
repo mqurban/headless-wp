@@ -24,7 +24,6 @@ const Navbar = () => {
         <BootstrapNavbar.Toggle />
         <BootstrapNavbar.Collapse>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
             {menuItems.map(page => (
               <Nav.Link 
                 key={page.id} 
