@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://qurban.ct.ws/wp-json/wp/v2/posts")
+      .then((response) => response.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.error("Error fetching posts:", error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Latest Posts</h1>
+      {posts.length === 0 ? (
+        <p>Loading posts...</p>
+      ) : (
+        posts.map((post) => (
+          <div key={post.id}>
+            <h2>{post.title.rendered}</h2>
+            <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+          </div>
+        ))
+      )}
     </div>
   );
 }
