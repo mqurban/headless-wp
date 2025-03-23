@@ -1,39 +1,44 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Navbar as BootstrapNavbar, Container, Nav } from 'react-bootstrap';
+import { fetchSettings, fetchPages } from '../api';
 
 const Navbar = () => {
-    const [siteTitle, setSiteTitle] = useState("Loading...");
-    const [menuItems, setMenuItems] = useState([]);
+  const [siteTitle, setSiteTitle] = useState("Loading...");
+  const [menuItems, setMenuItems] = useState([]);
 
-    useEffect(() => {
-        // fetch site title 
-        fetch("https://patpongmarket.com/wp-json/wp/v2/settings")
-            .then((res) => res.json())
-            .then((data) => setSiteTitle(data.title))
-            .catch((err) => console.error("Error fetching site Title: ", err));
+  useEffect(() => {
+    fetchSettings()
+      .then(data => setSiteTitle(data.title))
+      .catch(err => console.error("Error fetching site Title: ", err));
 
-        // fetch menu items 
-        fetch("https://patpongmarket.com/wp-json/wp/v2/pages")
-            .then((res) => res.json())
-            .then((data) => setMenuItems(data))
-            .catch((err) => console.error("Error fetching menu items: ", err));
-    }, []);
+    fetchPages()
+      .then(data => setMenuItems(data))
+      .catch(err => console.error("Error fetching menu items: ", err));
+  }, []);
 
-    return (
-        <nav className="bg-blue-600 p-4 text-white">
-            <div className="container mx-auto flex justify-between items-center">
-                <h1 className="text-xl font-bold">{siteTitle}</h1>
-                <div className="flex items-center">
-                    <Link to="/" className="mr-4">Home</Link>
-                    {menuItems.map((page) => (
-                        <Link key={page.id} to={`/${page.slug}`} className="mr-4">
-                            {page.title.rendered}
-                        </Link>
-                    ))}
-                </div>
-            </div>
-        </nav>
-    );
+  return (
+    <BootstrapNavbar bg="primary" variant="dark" expand="lg">
+      <Container>
+        <BootstrapNavbar.Brand as={Link} to="/">{siteTitle}</BootstrapNavbar.Brand>
+        <BootstrapNavbar.Toggle />
+        <BootstrapNavbar.Collapse>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">Home</Nav.Link>
+            {menuItems.map(page => (
+              <Nav.Link 
+                key={page.id} 
+                as={Link} 
+                to={`/${page.slug}`}
+              >
+                {page.title.rendered}
+              </Nav.Link>
+            ))}
+          </Nav>
+        </BootstrapNavbar.Collapse>
+      </Container>
+    </BootstrapNavbar>
+  );
 };
 
 export default Navbar;

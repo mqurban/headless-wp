@@ -1,24 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Container, Spinner } from 'react-bootstrap';
+import { fetchPost } from '../api';
 
 const SinglePost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    fetch(`https://patpongmarket.com/wp-json/wp/v2/posts/${id}`)
-      .then((res) => res.json())
-      .then((data) => setPost(data))
-      .catch((err) => console.error("Error fetching post:", err));
+    fetchPost(id)
+      .then(data => setPost(data))
+      .catch(err => console.error("Error fetching post:", err));
   }, [id]);
 
-  if (!post) return <p>Loading...</p>;
+  if (!post) return (
+    <Container className="d-flex justify-content-center p-5">
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </Container>
+  );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{post.title.rendered}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-    </div>
+    <Container>
+      <h1 className="mb-4">{post.title.rendered}</h1>
+      <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+    </Container>
   );
 };
 

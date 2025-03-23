@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Container, ListGroup } from 'react-bootstrap';
+import { fetchPosts } from '../api';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("https://patpongmarket.com/wp-json/wp/v2/posts")
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error("Error fetching posts:", err));
+    fetchPosts()
+      .then(data => setPosts(data))
+      .catch(err => console.error("Error fetching posts:", err));
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Latest Posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id} className="border-b py-2">
-            <Link to={`/post/${post.id}`} className="text-blue-500 hover:underline">
+    <Container>
+      <h1 className="mb-4">Latest Posts</h1>
+      <ListGroup>
+        {posts.map(post => (
+          <ListGroup.Item key={post.id}>
+            <Link to={`/post/${post.id}`} className="text-decoration-none">
               {post.title.rendered}
             </Link>
-          </li>
+          </ListGroup.Item>
         ))}
-      </ul>
-    </div>
+      </ListGroup>
+    </Container>
   );
 };
 
