@@ -7,10 +7,15 @@ function App() {
   useEffect(() => {
     const credentials = btoa('admin:wyHe rfYd 6nNn ASX1 jnmf T5An');
     
-    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts", {
+    fetch("https://mqurban.free.nf/wp-json/wp/v2/posts?_embed", {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
       headers: {
         'Authorization': `Basic ${credentials}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Origin': 'https://headless-wp-pearl.vercel.app'
       }
     })
       .then((response) => {
