@@ -2,18 +2,32 @@ import React, { useEffect, useState } from "react";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://qurban.ct.ws/wp-json/wp/v2/posts")
-      .then((response) => response.json())
-      .then((data) => setPosts(data))
-      .catch((error) => console.error("Error fetching posts:", error));
+    fetch("https://qurban.ct.ws/wp-json/wp/v2/posts")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setPosts(data);
+        setError(null);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+        setError("Failed to load posts. Please try again later.");
+      });
   }, []);
 
   return (
     <div>
       <h1>Latest Posts</h1>
-      {posts.length === 0 ? (
+      {error ? (
+        <p style={{ color: "red" }}>{error}</p>
+      ) : posts.length === 0 ? (
         <p>Loading posts...</p>
       ) : (
         posts.map((post) => (
