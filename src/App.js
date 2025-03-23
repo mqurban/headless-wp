@@ -1,4 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Container, Typography, Card, CardContent, Skeleton, Box } from "@mui/material";
+
+const PostSkeleton = () => (
+  <Card sx={{ mb: 2 }}>
+    <CardContent>
+      <Skeleton animation="wave" height={40} width="60%" sx={{ mb: 2 }} />
+      <Skeleton animation="wave" height={20} sx={{ mb: 1 }} />
+      <Skeleton animation="wave" height={20} sx={{ mb: 1 }} />
+      <Skeleton animation="wave" height={20} width="80%" />
+    </CardContent>
+  </Card>
+);
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -27,21 +39,36 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Latest Posts</h1>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h3" component="h1" gutterBottom sx={{ mb: 4 }}>
+        Latest Posts
+      </Typography>
+      
       {error ? (
-        <p style={{ color: "red" }}>{error}</p>
+        <Typography color="error" variant="body1">{error}</Typography>
       ) : posts.length === 0 ? (
-        <p>Loading posts...</p>
+        <Box>
+          <PostSkeleton />
+          <PostSkeleton />
+          <PostSkeleton />
+        </Box>
       ) : (
         posts.map((post) => (
-          <div key={post.id}>
-            <h2>{post.title.rendered}</h2>
-            <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-          </div>
+          <Card key={post.id} sx={{ mb: 2 }}>
+            <CardContent>
+              <Typography variant="h5" component="h2" gutterBottom>
+                {post.title.rendered}
+              </Typography>
+              <Typography
+                variant="body1"
+                component="div"
+                dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+              />
+            </CardContent>
+          </Card>
         ))
       )}
-    </div>
+    </Container>
   );
 }
 
