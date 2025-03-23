@@ -5,7 +5,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("http://qurban.ct.ws/wp-json/wp/v2/posts")
+    fetch("https://patpongmarket.com/wp-json/wp/v2/posts")
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((err) => console.error("Error fetching posts:", err));

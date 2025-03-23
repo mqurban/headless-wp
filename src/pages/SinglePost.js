@@ -6,7 +6,7 @@ const SinglePost = () => {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    fetch(`http://qurban.ct.ws/wp-json/wp/v2/posts/${id}`)
+    fetch(`https://patpongmarket.com/wp-json/wp/v2/posts/${id}`)
       .then((res) => res.json())
       .then((data) => setPost(data))
       .catch((err) => console.error("Error fetching post:", err));
